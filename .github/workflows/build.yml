@@ -22,4 +22,5 @@ jobs:
       - name: Build Rust
         uses: docker/build-push-action@v2
         with:
-          tags: ghcr.io/whype-net/builder:lat
+          push: true
+          tags: ghcr.io/whype-net/builder:latest
