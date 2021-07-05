@@ -8,8 +8,13 @@ inputs:
 outputs:
   build_id:
     description: Latest build id for the public branch
+  build_updated_time:
+    description: 'Unix timestamp that the build was updated'
   common_manifest_id:
     description: 'Manifest ID of Rust Common'
+  linux_manifest_id:
+    description: 'Manifest ID of Rust Linux'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
