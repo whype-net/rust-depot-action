@@ -1,0 +1,25 @@
+name: Test
+on:
+  workflow_run:
+    workflows: [ "Build Container" ]
+    branches: [ main ]
+    types:
+      - completed
+
+jobs:
+  test:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    name: A job to say test the output
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Rust App
+        uses: ./
+        id: rust
+        with:
+          app_id: 258550
+
+      - name: Get output build ID
+        run: echo "Latest build id is ${{ steps.rust.outputs.build_id }}"

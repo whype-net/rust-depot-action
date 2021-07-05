@@ -1,0 +1,17 @@
+name: 'rust build info'
+description: 'Get latest build and manifest information for rust dedicated server'
+inputs:
+  app_id:
+    description: 'app id'
+    required: true
+    default: "258550"
+outputs:
+  build_id:
+    description: Latest build id for the public branch
+  common_manifest_id:
+    description: 'Manifest ID of Rust Common'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.app_id }}
