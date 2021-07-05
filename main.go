@@ -47,15 +47,12 @@ func main() {
 	}
 
 	buildId := strings.Trim(v.Get("data", appid, "depots", "branches", "public", "buildid").String(), `"`)
-
 	linuxManifestId := strings.Trim(v.Get("data", appid, "depots", linuxDepot, "manifests", "public").String(), `"`)
 	buildUpdatedTime := strings.Trim(v.Get("data", appid, "depots", "branches", "public", "timeupdated").String(), `"`)
-
 	commonManifestId := strings.Trim(v.Get("data", appid, "depots", commonDepot, "manifests", "public").String(), `"`)
 
 	fmt.Printf("::set-output name=common_manifest_id::%s\n", commonManifestId)
 	fmt.Printf("::set-output name=linux_manifest_id::%s\n", linuxManifestId)
-
 	fmt.Printf("::set-output name=build_id::%s\n", buildId)
 	fmt.Printf("::set-output name=build_updated_time::%s\n", buildUpdatedTime)
 }
