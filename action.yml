@@ -24,5 +24,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - --app-id ${{ inputs.app_id }}
-    - --branch ${{ inputs.branch }}
+    - --app-id
+    - ${{ inputs.app_id }}
+    - --branch
+    - ${{ inputs.branch }}
