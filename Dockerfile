@@ -5,7 +5,7 @@ COPY . .
 ENV CGO_ENABLE=0
 RUN go build -o /build/builder .
 
-FROM alpine:3.10
+FROM alpine:3.20
 
 WORKDIR /srv
 COPY --from=builder /build/builder .
