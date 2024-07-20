@@ -9,7 +9,7 @@ inputs:
     description: 'branch to get ids for'
     required: true
     default: "public"
-    
+
 outputs:
   build_id:
     description: Latest build id for the public branch
@@ -24,4 +24,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.app_id }}
+    - --app-id ${{ inputs.app_id }}
+    - --branch ${{ inputs.branch }}
