@@ -5,7 +5,11 @@ inputs:
     description: 'app id'
     required: true
     default: "258550"
-
+  branch:
+    description: 'branch to get ids for'
+    required: true
+    default: "public"
+    
 outputs:
   build_id:
     description: Latest build id for the public branch
