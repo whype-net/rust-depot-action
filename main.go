@@ -2,11 +2,13 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
-	"github.com/valyala/fastjson"
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/valyala/fastjson"
 )
 
 const uri = "https://api.steamcmd.net/v1/info/%s"
@@ -16,15 +18,20 @@ const (
 	commonDepot = "258554"
 )
 
+var (
+	appID  = flag.String("app-id", "", "App ID")
+	branch = flag.String("branch", "public", "Branch")
+)
+
 func main() {
-	if len(os.Args) != 2 {
+	flag.Parse()
+
+	if *appID == "" {
+		fmt.Println("App ID is required")
 		os.Exit(-1)
 	}
 
-	appid := os.Args[1]
-	fmt.Printf("Looking up information for app id %s\n", appid)
-
-	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf(uri, appid), nil)
+	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf(uri, *appID), nil)
 	if err != nil {
 		panic(err)
 	}
@@ -46,10 +53,10 @@ func main() {
 		os.Exit(-1)
 	}
 
-	buildId := strings.Trim(v.Get("data", appid, "depots", "branches", "public", "buildid").String(), `"`)
-	linuxManifestId := strings.Trim(v.Get("data", appid, "depots", linuxDepot, "manifests", "public").String(), `"`)
-	buildUpdatedTime := strings.Trim(v.Get("data", appid, "depots", "branches", "public", "timeupdated").String(), `"`)
-	commonManifestId := strings.Trim(v.Get("data", appid, "depots", commonDepot, "manifests", "public").String(), `"`)
+	buildId := strings.Trim(v.Get("data", *appID, "depots", "branches", *branch, "buildid").String(), `"`)
+	linuxManifestId := strings.Trim(v.Get("data", *appID, "depots", linuxDepot, "manifests", *branch).String(), `"`)
+	buildUpdatedTime := strings.Trim(v.Get("data", *appID, "depots", "branches", *branch, "timeupdated").String(), `"`)
+	commonManifestId := strings.Trim(v.Get("data", *appID, "depots", commonDepot, "manifests", *branch).String(), `"`)
 
 	fmt.Printf("::set-output name=common_manifest_id::%s\n", commonManifestId)
 	fmt.Printf("::set-output name=linux_manifest_id::%s\n", linuxManifestId)
